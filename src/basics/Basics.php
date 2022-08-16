@@ -105,8 +105,8 @@ class Basics implements BasicsInterface
      */
     public function isSumEqual(string $input): bool
     {
-            $this->_validator->isValidStringException($input);
-        if ((int)$input[0]+(int)$input[1]+(int)$input[2] ===(int)substr($input, 3, 1) +(int)substr($input, 4, 1) +(int)substr($input, 5, 1)
+        $this->_validator->isValidStringException($input);
+        if ((int)$input[0]+(int)$input[1]+(int)$input[2]===(int)substr($input, 3, 1) +(int)substr($input, 4, 1) +(int)substr($input, 5, 1)
         ) {
             return true;
         } else {
