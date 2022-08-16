@@ -1,7 +1,0 @@
-.idea
-.phpunit.result.cache
-vendor
-src/db/config.php
-composer.phar
-/vendor/
-.phpunit.result.cache
