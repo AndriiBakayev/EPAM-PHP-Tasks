@@ -17,11 +17,11 @@ class Strings implements StringsInterface
     /**
      * The $input variable contains text in snake case (i.e. hello_world or this_is_home_task)
      * Transform it into camel cased string and return (i.e. helloWorld or thisIsHomeTask)
+     *
      * @see http://xahlee.info/comp/camelCase_vs_snake_case.html
      *
-     * Make sure the next PHPDoc instructions will be added:
-     * @param string $input
-     * @return string
+     * @param  string $input string in "snake-case"
+     * @return string $output string in "camelCase"
      */
     public function snakeCaseToCamelCase(string $input): string
     {
@@ -35,9 +35,8 @@ class Strings implements StringsInterface
      * Mirror each word individually and return transformed text (i.e. 'АВЫФ ждло')
      * !!! do not change words order
      *
-     * Make sure the next PHPDoc instructions will be added:
-     * @param string $input
-     * @return string
+     * @param  string $input text of words with " " delimiter
+     * @return string output string with mirrored words
      */
     public function mirrorMultibyteString(string $input): string
     {
@@ -60,9 +59,8 @@ class Strings implements StringsInterface
      * europe -> Europeurope
      * Implement this logic.
      *
-     * Make sure the next PHPDoc instructions will be added:
-     * @param string $noun
-     * @return string
+     * @param  string $noun of brand
+     * @return string output string with repeated noun if anagrama and "The" prefix if it noncapitalized
      */
     public function getBrandName(string $noun): string
     {
