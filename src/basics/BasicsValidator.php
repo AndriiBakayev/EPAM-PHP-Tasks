@@ -18,22 +18,21 @@ class BasicsValidator implements BasicsValidatorInterface
     /**
      * Implement the check functionality described in the method getMinuteQuarter (BasicsInterface Class) which throws Exception.
      *
-     * Make sure the next PHPDoc instructions will be added:
-     * @param int $minute
+     * @param int $minute Must be  int in range 0-59 , else Exception \InvalidArgumentException throw
+     * 
      * @throws \InvalidArgumentException
      */
     public function isMinutesException(int $minute): void
     {
         if (!is_int($minute) || $minute < 0 || $minute > 59) {
-            throw new \InvalidArgumentException('getMinuteQuarter function only accepts integers in range 0-59. Input was: ' . $minute);
+             throw new \InvalidArgumentException('getMinuteQuarter function only accepts integers in range 0-59. Input was: ' . $minute);
         }
     }
 
     /**
      * Implement the check functionality described in the method getMinuteQuarter (BasicsInterface Class) which throws Exception.
      *
-     * Make sure the next PHPDoc instructions will be added:
-     * @param int $year
+     * @param  int $year Must be  int in range 1900-9000, else Exception \InvalidArgumentException throw
      * @throws \InvalidArgumentException
      */
     public function isYearException(int $year): void
@@ -46,8 +45,7 @@ class BasicsValidator implements BasicsValidatorInterface
     /**
      * Implement the check functionality described in the method getMinuteQuarter (BasicsInterface Class) which throws Exception.
      *
-     * Make sure the next PHPDoc instructions will be added:
-     * @param string $input
+     * @param  string $input Must be a string of 6 digits , else Exception \InvalidArgumentException throw
      * @throws \InvalidArgumentException
      */
     public function isValidStringException(string $input): void
