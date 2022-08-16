@@ -1,27 +1,42 @@
 <?php
 
 /**
- * Arrays Class and implement the ArraysInterface and following methods:
+ * Arrays Class implements the ArraysInterface and following methods:
  * repeatArrayValues(), getUniqueValue(), groupByTag()
  * See details below.
  *
- * Note: Use next namespace for Arrays Class - "namespace arrays;" (Like in this Interface)
- * About composer autoloading and namespaces you can read here -
- * https://www.phptutorial.net/php-oop/php-composer-autoload/
+ * Php version 8.1.9
+ * 
+ * @category No_Category
+ * @package  No_Package
+ * @author   Andrey Bakayev <andreybakayev@gmail.com>
+ * @license  https://github.com/AndriiBakayev free
+ * @link     https://github.com/AndriiBakayev
  */
 
 namespace arrays;
 
+/**
+ * Arrays Class implements the ArraysInterface and following methods:
+ * repeatArrayValues(), getUniqueValue(), groupByTag()
+ *  
+ * @category No_Category
+ * @package  No_Package
+ * @author   Andrey Bakayev <andreybakayev@gmail.com>
+ * @license  https://github.com/AndriiBakayev free
+ * @link     https://github.com/AndriiBakayev
+ */
 class Arrays implements ArraysInterface
 {
     /**
      * The $input variable contains an array of digits
-     * Returns an array which will contain the same digits but repetitive by its value
+     * Returns an array which will contain the same digits 
+     * but repetitive by its value
      * without changing the order.
      * Example: [1,3,2] => [1,3,3,3,2,2]
      *
-     *
      * @param array $input array of ints
+     * 
      * @return array $output array where each value repeated by value times
      */
     public function repeatArrayValues(array $input): array
@@ -37,11 +52,12 @@ class Arrays implements ArraysInterface
 
     /**
      * The $input variable contains an array of digits
-     * Return the lowest unique value or 0 if there is no unique values or array is empty.
+     * Return the lowest unique value or 0 if there is 
+     * no unique values or array is empty.
      * Example: [1, 2, 3, 2, 1, 5, 6] => 3
      *
-     *
      * @param array $input - input array of ints
+     * 
      * @return int output the least uniqie value or 0 if it not found
      */
     public function getUniqueValue(array $input): int
@@ -58,7 +74,8 @@ class Arrays implements ArraysInterface
 
     /**
      * The $input variable contains an array of arrays
-     * Each sub array has keys: name (contains strings), tags (contains array of strings)
+     * Each sub array has keys: name (contains strings),
+     *  tags (contains array of strings)
      * Return the list of names grouped by tags
      * !!! The 'names' in returned array must be sorted ascending.
      *
@@ -78,9 +95,13 @@ class Arrays implements ArraysInterface
      * ]
      *
      * Make sure the next PHPDoc instructions will be added:
-     * @param array $input is non-associative array like: ['name'=>'nameB', 'tags'=>['tagA,tagB']],
-     * where 'tagA' and 'nameA' etc. are arbitrary strings
-     * @return array outputs associative array of sorted array like: tagN => [nameA, nameB]
+     *
+     * @param array $input is non-associative array like: 
+     *                     ['name'=>'nameB', 'tags'=>['tagA,tagB']],
+     *                     where 'tagA' and 'nameA' etc. are arbitrary strings
+     * 
+     * @return array outputs associative array 
+     * of sorted array like: tagN => [nameA, nameB]
      */
     public function groupByTag(array $input): array
     {
@@ -88,7 +109,8 @@ class Arrays implements ArraysInterface
         $tagsNames = [];
         foreach ($input as $val) {
             foreach ($val['tags'] as $tag) {
-                $tagsNames[$tag][] = $val['name']; //Making Tag => Name(s) associative array
+                $tagsNames[$tag][] = $val['name']; 
+                //Make Tag => Name(s) associative array
             }
         }
         foreach ($tagsNames as $key => $val) {
