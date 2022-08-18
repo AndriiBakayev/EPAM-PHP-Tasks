@@ -26,12 +26,13 @@ class Basics implements BasicsInterface
     /**
      * Stores validator object 
      *
-     * @var mixed _validator - private value for storing validator object 
-     * of class ValidatorInterface, whitch used by all functions to validate
-     * input parameter values for throwing InvalidArgumentException
-     * when the parameter values are out of accepted bounds
+     * @var BasicsValidatorInterface validator - private value for storing 
+     * validator object  of class ValidatorInterface, whitch used by all 
+     * functions to validate input parameter values for throwing 
+     * InvalidArgumentExceptionwhen the parameter values are out 
+     * of accepted bounds
      */
-    private mixed $_validator;
+    private BasicsValidatorInterface $_Validator;
 
     /**
      * Constructor of the class that initialises private $validator variable
@@ -43,7 +44,7 @@ class Basics implements BasicsInterface
      */
     public function __construct(BasicsValidatorInterface $validator)
     {
-        $this->_validator = $validator;
+        $this->_Validator = $validator;
     }
 
     /**
@@ -51,27 +52,22 @@ class Basics implements BasicsInterface
      * $minute given
      *
      * @param int $minute is an integer value with a value between 00 an 59
-     *                    when it does't, function
+     *                    when it does, function returns:
      * 
      * @return string  one of the values: "first", "second", "third" and "fourth".
-     * when it
+     * when it, else it:
      *
-     * @throws InvalidArgumentException if $minute is negative of greater then 60.
+     * @throws InvalidArgumentException if $minute is negative of greater then 59.
      */
     public function getMinuteQuarter(int $minute): string
     {
-        $this->_validator->isMinutesException($minute);
-        if ($minute == 0) {
-            return ('fourth');
-        } elseif ($minute <= 15) {
-            return ('first');
-        } elseif ($minute <= 30) {
-            return ('second');
-        } elseif ($minute <= 45) {
-            return ('third');
-        } elseif ($minute <= 59) {
-            return ('fourth');
-        }
+        $this->_Validator->isMinutesException($minute);
+        return $minute === 0 ? 'fourth'
+            : ($minute <= 15 ? 'first'
+                : ($minute <= 30 ? 'second'
+                    : ($minute <= 45 ? 'third'
+                        : ($minute <= 59 ? 'fourth' 
+                            : 'out of hour'))));
     }
 
     /**
@@ -83,16 +79,10 @@ class Basics implements BasicsInterface
      */
     public function isLeapYear(int $year): bool
     {
-        $this->_validator->isYearException($year);
-        if ($year % 4 != 0) {
-            return false;
-        } elseif ($year % 100 != 0) {
-            return true;
-        } elseif ($year % 400 != 0) {
-            return false;
-        } else {
-            return true;
-        }
+        $this->_Validator->isYearException($year);
+        return $year % 4 !== 0 ? false 
+            : ($year % 100 !== 0 ? true 
+                : ($year % 400 !== 0 ? false : true));
     }
 
     /**
@@ -105,12 +95,7 @@ class Basics implements BasicsInterface
      */
     public function isSumEqual(string $input): bool
     {
-        $this->_validator->isValidStringException($input);
-        if ((int)$input[0]+(int)$input[1]+(int)$input[2]===(int)substr($input, 3, 1) +(int)substr($input, 4, 1) +(int)substr($input, 5, 1)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        $this->_Validator->isValidStringException($input);
+        return $input[0] + $input[1] + $input[2] === $input[3] + $input[4] + $input[5];
     }
 }
