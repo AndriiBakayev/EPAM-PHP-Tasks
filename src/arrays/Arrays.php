@@ -41,12 +41,20 @@ class Arrays implements ArraysInterface
      */
     public function repeatArrayValues(array $input): array
     {
-        $output = [];
+        $output=[];
+        // Newer version - have no mension how to supply link to $output array 
+        // via pointer into function:
+        // array_walk($input,function(&$output,$value, $key, ){
+        //      $output = array_merge($output, array_fill(0, $val, $val));
+        // }, &$output);
         foreach ($input as $key => $val) {
-            for ($i = 0; $i < $val; $i++) {
-                $output[] = $val;
-            }
+            $output = array_merge($output, array_fill(0, $val, $val));
         }
+        // Old  version:
+        // foreach ($input as $key => $val) {
+        // for ($i = 0; $i < $val; $i++) {
+        //     $output[] = $val;
+        // }
         return $output;
     }
 
@@ -69,6 +77,7 @@ class Arrays implements ArraysInterface
                 $ret = $key;
             }
         }
+        
         return $ret;
     }
 
@@ -105,7 +114,7 @@ class Arrays implements ArraysInterface
      */
     public function groupByTag(array $input): array
     {
-
+        //array_walk_recursive? 
         $tagsNames = [];
         foreach ($input as $val) {
             foreach ($val['tags'] as $tag) {
