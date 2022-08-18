@@ -92,7 +92,7 @@ class BasicsValidator implements BasicsValidatorInterface
     public function isValidStringException(string $input): void
     {
         if (
-            ! is_string($input) 
+            !is_string($input) 
             || strlen($input) !== 6 
             || preg_match('/d6/', $input)
         ) {
