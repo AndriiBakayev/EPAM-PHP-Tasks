@@ -62,12 +62,17 @@ class Basics implements BasicsInterface
     public function getMinuteQuarter(int $minute): string
     {
         $this->_Validator->isMinutesException($minute);
-        return $minute === 0 ? 'fourth'
-            : ($minute <= 15 ? 'first'
-                : ($minute <= 30 ? 'second'
-                    : ($minute <= 45 ? 'third'
-                        : ($minute <= 59 ? 'fourth' 
-                            : 'out of hour'))));
+        if ($minute === 0) {
+            return 'fourth';
+        } elseif ($minute <= 15) {
+            return 'first';
+        } elseif ($minute <= 30) {
+            return 'second';
+        } elseif ($minute <= 45) {
+            return 'third';
+        } elseif ($minute <= 59) {
+            return 'fourth';
+        }
     }
 
     /**
