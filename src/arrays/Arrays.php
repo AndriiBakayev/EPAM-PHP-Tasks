@@ -48,17 +48,6 @@ class Arrays implements ArraysInterface
                 $val = array_fill(0, $val, $val);
             }
         );
-        // Version via array_merge and array_fill:
-        //     $output = [];     
-        //     foreach ($input as $key => $val) {
-        //         $output = array_merge($output, array_fill(0, $val, $val));
-        //     }
-        // Old  version:
-        //     $output = [];
-        //     foreach ($input as $key => $val) {
-        //     for ($i = 0; $i < $val; $i++) {
-        //         $output[] = $val;
-        //     }
 
         return array_merge(...$input);
     }
@@ -75,16 +64,6 @@ class Arrays implements ArraysInterface
      */
     public function getUniqueValue(array $input): int
     {
-        // //old, more simple version:
-        // $ret=0;
-        // foreach (array_count_values($input) as $key => $val) {
-        //     if ($val == 1 && ($key < $ret || $ret == 0)) {
-        //         $ret = $key;
-        //     }
-        // }
-        // return $ret;
-        //Maximum usage of array functions without foreach:
-        //First get the unique_values_array
         $unique_values_array = array_keys(
             array_filter(
                 array_count_values($input), //Array of statistic 
