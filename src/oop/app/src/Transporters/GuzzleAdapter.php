@@ -1,7 +1,7 @@
 <?php
 
 namespace src\oop\app\src\Transporters;
-
+//use GuzzleHttp\Client;
 /** 
  * For Class GuzzleAdapter use GuzzleHttp Client for getting the page content.
  * Note: Use next namespace for GuzzleAdapter Class - 
@@ -18,18 +18,13 @@ Class GuzzleAdapter implements TransportInterface
      */
     public function getContent(string $url): string
     {
-        $client = new GuzzleHttp\Client();
-        $res = $client->request('GET', $url, [
-            'auth' => ['user', 'pass']
-        ]);
-        echo $res->getStatusCode();
-        // "200"
-        echo $res->getHeader('content-type')[0];
-        // 'application/json; charset=utf8'
-        echo $res->getBody();
-        // {"type":"User"...' 
+        $client = new \GuzzleHttp\Client(['base_uri' => 'http://httpbin.org/','timeout'  => 2.0]);
+        $responce = $client->request('GET', $url);
+        $html = (string) $responce->getBody();
+       //echo $html; 
+        return $html; 
     }
     
 
 }
-}
+
