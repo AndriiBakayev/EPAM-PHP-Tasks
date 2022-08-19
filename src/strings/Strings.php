@@ -2,7 +2,7 @@
 
 /**
  * Php version 8.1.9
- * 
+ *
  * @category No_Category
  * @package  No_Package
  * @author   Andrey Bakayev <andreybakayev@gmail.com>
@@ -16,7 +16,7 @@ namespace strings;
  * Strings Class and implements the StringsInterface and following methods:
  * snakeCaseToCamelCase(), mirrorMultibyteString(), getBrandName()
  * See details below.
- * 
+ *
  * @category No_Category
  * @package  No_Package
  * @author   Andrey Bakayev <andreybakayev@gmail.com>
@@ -26,30 +26,30 @@ namespace strings;
 class Strings implements StringsInterface
 {
     /**
-     * The $input variable contains text in snake case 
+     * The $input variable contains text in snake case
      * (i.e. hello_world or this_is_home_task)
-     * Transform it into camel cased string and return 
+     * Transform it into camel cased string and return
      * (i.e. helloWorld or thisIsHomeTask)
      * see http://xahlee.info/comp/camelCase_vs_snake_case.html
      *
      * @param string $input string in "snake-case"
-     * 
+     *
      * @return string $output string in "camelCase"
      */
     public function snakeCaseToCamelCase(string $input): string
     {
         $str = str_replace('_', '', ucwords($input, '_'));
         $str = lcfirst($str);
+
         return $str;
     }
-
     /**
      * The $input variable contains multibyte text like 'ФЫВА олдж'
      * Mirror each word individually and return transformed text (i.e. 'АВЫФ ждло')
      * !!! do not change words order
      *
      * @param string $input text of words with " " delimiter
-     * 
+     *
      * @return string output string with mirrored words
      */
     public function mirrorMultibyteString(string $input): string
@@ -59,12 +59,12 @@ class Strings implements StringsInterface
             $chars = mb_str_split($word, 1);
             $output = $output . ' ' . implode('', array_reverse($chars));
         }
+        
         return(ltrim($output));
     }
-
     /**
      * My friend wants a new band name for her band.
-     * She likes bands that use the formula: 'The' + a noun 
+     * She likes bands that use the formula: 'The' + a noun
      * with first letter capitalized.
      * However, when a noun STARTS and ENDS with the same letter,
      * she likes to repeat the noun twice and connect them together
@@ -76,8 +76,8 @@ class Strings implements StringsInterface
      * Implement this logic.
      *
      * @param string $noun of brand
-     * 
-     * @return string output string with repeated noun if anagrama 
+     *
+     * @return string output string with repeated noun if anagrama
      * and "The" prefix if it noncapitalized
      */
     public function getBrandName(string $noun): string
