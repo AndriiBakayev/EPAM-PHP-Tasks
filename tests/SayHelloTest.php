@@ -29,7 +29,6 @@ class SayHelloTest extends TestCase
      * Stores object of instanted class
      */
     protected $functions;
-
     /**
      * SetUp() Makes an instance of a class
      *
@@ -39,7 +38,6 @@ class SayHelloTest extends TestCase
     {
         $this->functions = new functions\Functions();
     }
-
     /**
      * TestSayHello asserts that output of function is really "Hello"
      *

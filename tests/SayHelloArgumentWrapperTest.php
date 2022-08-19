@@ -38,7 +38,6 @@ class SayHelloArgumentWrapperTest extends TestCase
      * @link     https://github.com/AndriiBakayev
      */
     protected $functions;
-
     /**
      * SetUp() Makes an instance of a class
      *
@@ -48,7 +47,6 @@ class SayHelloArgumentWrapperTest extends TestCase
     {
         $this->functions = new functions\Functions();
     }
-
     /**
      * Makes negative tests assertions of throwing exceptions using data provider
      *
@@ -66,7 +64,6 @@ class SayHelloArgumentWrapperTest extends TestCase
             );
         }
     }
-
     /**
      * Tests an identity of sayHelloArgumentWrapper inbond/outbond parameters
      *
@@ -83,10 +80,9 @@ class SayHelloArgumentWrapperTest extends TestCase
             $expected,
             $this->functions->sayHelloArgumentWrapper($input),
             "functions/Functions.php/sayHelloArgumentWrapper($input)"
-            ." does not say 'Hello $input'"
+            . " does not say 'Hello $input'"
         );
     }
-
     /**
      * Data provider for testing identity returns pairs of inbond/outbond values
      * positiveDataProvider

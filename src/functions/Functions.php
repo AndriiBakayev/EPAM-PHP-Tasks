@@ -50,7 +50,6 @@ class Functions
     {
         return 'Hello';
     }
-
     /**
      * Create a PhpUnit test (SayHelloArgumentTest) which will check that
      * function below returns a correct result
@@ -68,7 +67,6 @@ class Functions
     {
         return "Hello $arg";
     }
-
     /**
      * What can be put instead of placeholder
      * so that function throws an InvalidArgumentException if $arg
@@ -98,7 +96,6 @@ class Functions
 
         return $this->sayHelloArgument($arg);
     }
-
     /**
      * Create a PhpUnit test (CountArgumentsTest) which will check that
      * function below returns correct result
@@ -115,7 +112,6 @@ class Functions
             'argument_values' => func_get_args(),
         ];
     }
-
     /**
      * Fulfill a function countArgumentsWrapper so that it will
      * call the original function (countArguments)
