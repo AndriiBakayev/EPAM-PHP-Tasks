@@ -66,7 +66,7 @@ class Arrays implements ArraysInterface
     {
         $unique_values_array = array_keys(
             array_filter(
-                array_count_values($input), //Array of statistic 
+                array_count_values($input), //Array of statistic
                 function ($val) {
                     //return of noname function, not a general function return:
                     return $val === 1;
