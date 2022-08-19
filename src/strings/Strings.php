@@ -59,7 +59,7 @@ class Strings implements StringsInterface
             $chars = mb_str_split($word, 1);
             $output = $output . ' ' . implode('', array_reverse($chars));
         }
-        
+
         return(ltrim($output));
     }
     /**
@@ -82,9 +82,9 @@ class Strings implements StringsInterface
      */
     public function getBrandName(string $noun): string
     {
-        if (mb_substr(lcfirst($noun), 0, 1) == mb_substr($noun, -1, 1)) {
+        if (mb_substr(lcfirst($noun), 0, 1) === mb_substr($noun, -1, 1)) {
             return (ucfirst($noun) . mb_substr($noun, 1, null));
-        } elseif (lcfirst($noun) == $noun) {
+        } elseif (lcfirst($noun) === $noun) {
             return "The " . ucfirst($noun);
         } else {
             return ucfirst($noun);
