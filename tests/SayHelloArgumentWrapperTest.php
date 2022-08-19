@@ -1,19 +1,25 @@
 <?php
+
 /**
+ * SayHelloTest tests that function
+ * functions/Functions.php/sayHelloArgumentWrapper
+ * realy says \"Hello\"
  * Php version 8.1.9
- * 
+ *
  * @category No_Category
  * @package  No_Package
  * @author   Andrey Bakayev <andreybakayev@gmail.com>
  * @license  https://github.com/AndriiBakayev free
  * @link     https://github.com/AndriiBakayev
  */
+
 use PHPUnit\Framework\TestCase;
 
 /**
- * SayHelloTest tests that function functions/Functions.php/SayHello 
+ * SayHelloTest tests that function
+ * functions/Functions.php/sayHelloArgumentWrapper
  * realy says \"Hello\"
- * 
+ *
  * @category No_Category
  * @package  No_Package
  * @author   Andrey Bakayev <andreybakayev@gmail.com>
@@ -42,37 +48,36 @@ class SayHelloArgumentWrapperTest extends TestCase
     {
         $this->functions = new functions\Functions();
     }
-    
+
     /**
      * Makes negative tests assertions of throwing exceptions using data provider
-     * 
+     *
      * @return void returns void
      */
-    public function testHelloArgumentWrapperNegative():void
+    public function testHelloArgumentWrapperNegative(): void
     {
-        try{
+        try {
             $this->functions->sayHelloArgumentWrapper([1,2,3,4,5]);
             $this->fail('An expected exception not thrown');
-        } catch (InvalidArgumentException $exception){
+        } catch (InvalidArgumentException $exception) {
             $this->assertStringContainsString(
                 'function accepts only scalar',
                 $exception->getMessage()
             );
         }
     }
- 
 
     /**
      * Tests an identity of sayHelloArgumentWrapper inbond/outbond parameters
-     * 
+     *
      * @param $input    input test input parameters
      * @param $expected expcted value
-     * 
+     *
      * @return void returns void
-     * 
-     * @dataProvider positiveDataProvider 
+     *
+     * @dataProvider positiveDataProvider
      */
-    public function testSayHelloArgumentWrapper($input, $expected):void
+    public function testSayHelloArgumentWrapper($input, $expected): void
     {
         $this->assertSame(
             $expected,
@@ -81,12 +86,12 @@ class SayHelloArgumentWrapperTest extends TestCase
             does not say \"Hello $input\""
         );
     }
-    
+
     /**
      * Data provider for testing identity returns pairs of inbond/outbond values
      * positiveDataProvider
      *
-     * @return array pairs of ingoing / outgoing arrays for 
+     * @return array pairs of ingoing / outgoing arrays for
      * positive tests
      */
     public function positiveDataProvider(): array
@@ -97,6 +102,4 @@ class SayHelloArgumentWrapperTest extends TestCase
             [null, 'Hello '], //Null test
         ];
     }
-
-
 }
