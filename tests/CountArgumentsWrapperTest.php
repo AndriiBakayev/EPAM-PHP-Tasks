@@ -105,7 +105,7 @@ class CountArgumentsWrapperTest extends TestCase
         $this->assertSame(
             $expected,
             $this->functions->CountArgumentsWrapper(...$input),
-            "functions/Functions.php/CountArgumentsWrapper does not compute well "
+            'functions/Functions.php/CountArgumentsWrapper does not compute well '
         );
     }
 

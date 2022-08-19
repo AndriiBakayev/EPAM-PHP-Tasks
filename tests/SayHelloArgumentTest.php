@@ -55,8 +55,8 @@ class SayHelloArgumentTest extends TestCase
         $this->assertSame(
             $expected,
             $this->functions->sayHelloArgument($input),
-            "functions/Functions.php/SayHelloArgument($input) 
-            does not say \"Hello $input\""
+            "functions/Functions.php/SayHelloArgument($input)"
+            . "does not say 'Hello $input'"
         );
     }
     /**

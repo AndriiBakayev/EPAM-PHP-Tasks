@@ -82,8 +82,8 @@ class SayHelloArgumentWrapperTest extends TestCase
         $this->assertSame(
             $expected,
             $this->functions->sayHelloArgumentWrapper($input),
-            "functions/Functions.php/sayHelloArgumentWrapper($input)
-            does not say \"Hello $input\""
+            "functions/Functions.php/sayHelloArgumentWrapper($input)"
+            ." does not say 'Hello $input'"
         );
     }
 

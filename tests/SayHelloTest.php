@@ -48,9 +48,9 @@ class SayHelloTest extends TestCase
     public function testSayHello()
     {
         $this->assertSame(
-            "Hello",
+            'Hello',
             $this->functions->sayHello(),
-            "functions/Functions.php/SayHello does not say \"Hello\""
+            'functions/Functions.php/SayHello does not say "Hello"'
         );
     }
 }
