@@ -38,6 +38,7 @@ class SayHelloArgumentWrapperTest extends TestCase
      * @link     https://github.com/AndriiBakayev
      */
     protected $functions;
+
     /**
      * SetUp() Makes an instance of a class
      *
@@ -47,6 +48,7 @@ class SayHelloArgumentWrapperTest extends TestCase
     {
         $this->functions = new functions\Functions();
     }
+
     /**
      * Makes negative tests assertions of throwing exceptions using data provider
      *

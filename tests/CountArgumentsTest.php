@@ -29,6 +29,7 @@ class CountArgumentsTest extends TestCase
      * Stores object of instanted class
      */
     protected $functions;
+
     /**
      * Makes an instance of a class and prepares for test
      *
@@ -38,6 +39,7 @@ class CountArgumentsTest extends TestCase
     {
         $this->functions = new functions\Functions();
     }
+
     /**
      * Using data provider which provides ingoing parameter
      * values tests assets of identity of outgoing result
@@ -57,6 +59,7 @@ class CountArgumentsTest extends TestCase
             "functions/Functions.php/CountArguments does not compute well "
         );
     }
+
     /**
      * PositiveDataProvider
      *

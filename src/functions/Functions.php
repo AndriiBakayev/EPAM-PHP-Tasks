@@ -51,6 +51,7 @@ class Functions
     {
         return 'Hello';
     }
+
     /**
      * Create a PhpUnit test (SayHelloArgumentTest) which will check that
      * function below returns a correct result

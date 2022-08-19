@@ -29,6 +29,7 @@ class SayHelloArgumentTest extends TestCase
      * Stores object of instanted class
      */
     protected $functions;
+
     /**
      * SetUp() Makes an instance of a class
      *
@@ -38,6 +39,7 @@ class SayHelloArgumentTest extends TestCase
     {
         $this->functions = new functions\Functions();
     }
+
     /**
      * Makes positive tests assertions using dataprovider
      *
@@ -57,6 +59,7 @@ class SayHelloArgumentTest extends TestCase
             . "does not say 'Hello $input'"
         );
     }
+
     /**
      * PositiveDataProvider provides pairs of ingoing / outgoing
      * arrays for positive tests

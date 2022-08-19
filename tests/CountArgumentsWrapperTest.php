@@ -28,6 +28,7 @@ class CountArgumentsWrapperTest extends TestCase
      * Stores object of instanted class
      */
     protected $functions;
+
     /**
      * SetUp() Makes an instance of a class
      *
@@ -37,6 +38,7 @@ class CountArgumentsWrapperTest extends TestCase
     {
         $this->functions = new functions\Functions();
     }
+
     /**
      * TearDown - Destroys instanted class objects
      *
@@ -46,6 +48,7 @@ class CountArgumentsWrapperTest extends TestCase
     {
         unset($this->functions);
     }
+
     /**
      * Makes test runs of tested functions and controls it's exception
      *
@@ -67,6 +70,7 @@ class CountArgumentsWrapperTest extends TestCase
             );
         }
     }
+
     /**
      * NegativeDataProvider provides pairs of ingoing / outgoing arrays
      * for negative tests for exceptions throwing
