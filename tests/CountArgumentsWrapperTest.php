@@ -80,13 +80,13 @@ class CountArgumentsWrapperTest extends TestCase
     public function negativeDataProvider(): array
     {
         return [
-            [['1','2',3,'4','5']],
+            [['1', '2', 3, '4', '5']],
             [[1]],
-            [['string',['array_of_strings',"end"]]],
+            [['string', ['array_of_strings', "end"]]],
             [[false]],
             [[null]],
-            [[[1,2,3,4,5,"Hello"]]],
-            [[-1.5,false,true,"Hi"]],
+            [[[1, 2, 3, 4, 5, "Hello"]]],
+            [[-1.5, false, true, "Hi"]],
         ];
     }
 
@@ -117,7 +117,7 @@ class CountArgumentsWrapperTest extends TestCase
     public function positiveDataProvider(): array
     {
         return [
-            [['1','2','3'], ['argument_count' => 3 , 'argument_values' => ['1','2','3']]],
+            [['1', '2', '3'], ['argument_count' => 3 , 'argument_values' => ['1', '2', '3']]],
             [['1'],   ['argument_count' => 1 , 'argument_values' => ['1']]],
             [['0'],   ['argument_count' => 1 , 'argument_values' => ['0']]],
             [[''],   ['argument_count' => 1 , 'argument_values' => ['']]],

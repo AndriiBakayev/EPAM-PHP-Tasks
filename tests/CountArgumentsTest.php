@@ -67,14 +67,14 @@ class CountArgumentsTest extends TestCase
     public function positiveDataProvider(): array
     {
         return [
-            [[1,2,3], ['argument_count' => 3, 'argument_values' => [1,2,3]]],
+            [[1, 2, 3], ['argument_count' => 3, 'argument_values' => [1, 2, 3]]],
             [[1], ['argument_count' => 1, 'argument_values' => [1]]],
             [[0], ['argument_count' => 1, 'argument_values' => [0]]],
             [[], ['argument_count' => 0, 'argument_values' => []]],
             [["HELLo"], ['argument_count' => 1, 'argument_values' => ["HELLo"]]],
-            [[-1.5,false,true,"Hi"], [
+            [[-1.5, false, true, "Hi"], [
                                         'argument_count' => 4 ,
-                                        'argument_values' => [-1.5,false,true,"Hi"]
+                                        'argument_values' => [-1.5, false, true, "Hi"]
                                      ]],
         ];
     }
