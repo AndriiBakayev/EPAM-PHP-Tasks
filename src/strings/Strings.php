@@ -43,6 +43,7 @@ class Strings implements StringsInterface
 
         return $str;
     }
+
     /**
      * The $input variable contains multibyte text like 'ФЫВА олдж'
      * Mirror each word individually and return transformed text (i.e. 'АВЫФ ждло')
@@ -62,6 +63,7 @@ class Strings implements StringsInterface
 
         return(ltrim($output));
     }
+
     /**
      * My friend wants a new band name for her band.
      * She likes bands that use the formula: 'The' + a noun
