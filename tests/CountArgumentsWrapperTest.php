@@ -117,13 +117,13 @@ class CountArgumentsWrapperTest extends TestCase
     public function positiveDataProvider(): array
     {
         return [
-            [['1', '2', '3'], ['argument_count' => 3 , 'argument_values' => ['1', '2', '3']]],
-            [['1'],   ['argument_count' => 1 , 'argument_values' => ['1']]],
-            [['0'],   ['argument_count' => 1 , 'argument_values' => ['0']]],
-            [[''],   ['argument_count' => 1 , 'argument_values' => ['']]],
-            [[],   ['argument_count' => 0 , 'argument_values' => []]],
-            [["HELLo"],   ['argument_count' => 1 , 'argument_values' => ["HELLo"]]],
-            [["Hello World"],   ['argument_count' => 1 , 'argument_values' => ["Hello World"]]],
+            [['1', '2', '3'], ['argument_count' => 3, 'argument_values' => ['1', '2', '3']]],
+            [['1'], ['argument_count' => 1, 'argument_values' => ['1']]],
+            [['0'], ['argument_count' => 1, 'argument_values' => ['0']]],
+            [[''], ['argument_count' => 1, 'argument_values' => ['']]],
+            [[], ['argument_count' => 0, 'argument_values' => []]],
+            [["HELLo"], ['argument_count' => 1, 'argument_values' => ["HELLo"]]],
+            [["Hello World"], ['argument_count' => 1, 'argument_values' => ["Hello World"]]],
         ];
     }
 }
