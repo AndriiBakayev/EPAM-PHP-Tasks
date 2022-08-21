@@ -16,9 +16,9 @@ namespace src\oop\app\src\Models;
 
 class Movie implements MovieInterface
 {
-    private string $title = 'default title';
-    private string $poster;
-    private string $description;
+    private string $title =  'Title placeholder';
+    private string $poster = 'Poster placeholder';
+    private string $description = 'Pescriptopn placeholder';
     /**
      * @return string
      */

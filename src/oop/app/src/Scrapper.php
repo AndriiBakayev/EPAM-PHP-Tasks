@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Create Class - Scrapper with method getMovie().
  * getMovie() - should return Movie Class object.
@@ -15,14 +16,20 @@ use src\oop\app\src\Models\Movie;
 use src\oop\app\src\Parsers\ParserInterface;
 use src\oop\app\src\Transporters\TransportInterface;
 
+/**
+ * Initializes own private vars $Transporter and $Parser l by supplied objects
+ * and using them in method Getmovie to get and parce content to set Movie obgect
+ * Scrapper
+ */
 class Scrapper
 {
     private mixed $Transporter;
     private mixed $Parser;
 
     /**
-     * @param  TransportInterface  $transporter
-     * @param  ParserInterface  $parser
+     * Sets transporter and parser objects for future getMogie routine
+     * @param  TransportInterface  $transporter object
+     * @param  ParserInterface  $parser object
      */
     public function __construct(TransportInterface $transporter, ParserInterface $parser)
     {
@@ -30,20 +37,20 @@ class Scrapper
         $this->Parser = $parser;
     }
     /**
-     * @param  string  $url
-     * @return Movie
+     * Gets content from url, prrses using Parser class object and sets movie object
+     * @param  string  $url url of the site
+     * @return Movie Movie is an object with title,poster and description of movie
      */
     public function getMovie(string $url): Movie
     {
-        echo $url;
         $getHtml = $this->Transporter->getContent($url);
-        $data = $this->Parser->parseContent($getHtml);
-        //echo $data['title'];
-        $movie = new Movie($data);
-        // $movie->setTitle('HI');
-        // $movie->setPoster('poster');
-        // $movie->setDescription('description');
-        
+        $parced = $this->Parser->parseContent($getHtml);
+        $movie = new Movie();
+        if (is_object($parced)) {
+            $movie->setTitle($parced->title);
+            $movie->setPoster($parced->poster);
+            $movie->setDescription($parced->description);
+        }
         return $movie;
     }
 }

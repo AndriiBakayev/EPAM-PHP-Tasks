@@ -37,7 +37,7 @@ use src\oop\app\src\ScrapperFactory;
 
 $scrapperFactory = new ScrapperFactory();
 
-$filmixMovie = $scrapperFactory->create('filmix')->getMovie('https://filmix.ac/filmi/triller/151413-lost-ledyanoy-drayv-2021.html');
+$filmixMovie = $scrapperFactory->create('filmix')->getMovie('https://filmix.ac/filmi/triller/151413-20022-ledyanoy-drayv-2021.html');
 $kinoukrMovie = $scrapperFactory->create('kinoukr')->getMovie('https://kinoukr.com/4166-pravdyva-istoriya-bandy-kelli.html');
 
 ?>
