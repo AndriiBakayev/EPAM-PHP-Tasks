@@ -1,20 +1,22 @@
 <?php
+
 /**
  * Php version 8.1.9
- * 
+ *
  * @category No_Category
  * @package  No_Package
  * @author   Andrey Bakayev <andreybakayev@gmail.com>
  * @license  https://github.com/AndriiBakayev free
  * @link     https://github.com/AndriiBakayev
  */
+
 namespace basics;
 
 /**
  * Basics Class and implement the BasicsInterface and following methods:
  * getMinuteQuarter(), isLeapYear(), isSumEqual()
  * See details below.
- * 
+ *
  * @category No_Category
  * @package  No_Package
  * @author   Andrey Bakayev <andreybakayev@gmail.com>
@@ -24,15 +26,15 @@ namespace basics;
 class Basics implements BasicsInterface
 {
     /**
-     * Stores validator object 
+     * Stores validator object
      *
-     * @var BasicsValidatorInterface validator - private value for storing 
-     * validator object  of class ValidatorInterface, whitch used by all 
-     * functions to validate input parameter values for throwing 
-     * InvalidArgumentExceptionwhen the parameter values are out 
+     * @var BasicsValidatorInterface validator - private value for storing
+     * validator object  of class ValidatorInterface, whitch used by all
+     * functions to validate input parameter values for throwing
+     * InvalidArgumentExceptionwhen the parameter values are out
      * of accepted bounds
      */
-    private BasicsValidatorInterface $_Validator;
+    private BasicsValidatorInterface $Validator;
 
     /**
      * Constructor of the class that initialises private $validator variable
@@ -44,16 +46,16 @@ class Basics implements BasicsInterface
      */
     public function __construct(BasicsValidatorInterface $validator)
     {
-        $this->_Validator = $validator;
+        $this->Validator = $validator;
     }
 
     /**
-     * GetMinuteQuarter returns the quarter of a hour according to parameter 
+     * GetMinuteQuarter returns the quarter of a hour according to parameter
      * $minute given
      *
      * @param int $minute is an integer value with a value between 00 an 59
      *                    when it does, function returns:
-     * 
+     *
      * @return string  one of the values: "first", "second", "third" and "fourth".
      * when it, else it:
      *
@@ -61,7 +63,7 @@ class Basics implements BasicsInterface
      */
     public function getMinuteQuarter(int $minute): string
     {
-        $this->_Validator->isMinutesException($minute);
+        $this->Validator->isMinutesException($minute);
         if ($minute === 0) {
             return 'fourth';
         } elseif ($minute <= 15) {
@@ -84,15 +86,15 @@ class Basics implements BasicsInterface
      */
     public function isLeapYear(int $year): bool
     {
-        $this->_Validator->isYearException($year);
-        
-        return $year % 4 !== 0 ? false 
-            : ($year % 100 !== 0 ? true 
+        $this->Validator->isYearException($year);
+
+        return $year % 4 !== 0 ? false
+            : ($year % 100 !== 0 ? true
                 : ($year % 400 !== 0 ? false : true));
     }
 
     /**
-     * IsSumEqual compares sum of leading and of tailing digits 
+     * IsSumEqual compares sum of leading and of tailing digits
      * of the string and returns true when sum is equal
      *
      * @param string $input - input string with 6 digits to compare
@@ -101,8 +103,8 @@ class Basics implements BasicsInterface
      */
     public function isSumEqual(string $input): bool
     {
-        $this->_Validator->isValidStringException($input);
-        
+        $this->Validator->isValidStringException($input);
+
         return $input[0] + $input[1] + $input[2] === $input[3] + $input[4] + $input[5];
     }
 }

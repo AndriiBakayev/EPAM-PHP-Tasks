@@ -43,7 +43,7 @@ class BasicsValidator implements BasicsValidatorInterface
     {
         if (!is_int($minute) || $minute < 0 || $minute > 59) {
             throw new \InvalidArgumentException(
-                'getMinuteQuarter function only accepts integers in range 0-59. Input was: ' 
+                'getMinuteQuarter function only accepts integers in range 0-59. Input was: '
                 . $minute
             );
         }
@@ -64,7 +64,7 @@ class BasicsValidator implements BasicsValidatorInterface
     {
         if (!is_int($year) || $year < 1900 || $year > 9999) {
             throw new \InvalidArgumentException(
-                'isLeapYear function only accepts integers in range 1900-9999. Input was: ' 
+                'isLeapYear function only accepts integers in range 1900-9999. Input was: '
                 . $year
             );
         }
@@ -85,7 +85,7 @@ class BasicsValidator implements BasicsValidatorInterface
     {
         if (!is_string($input) || strlen($input) !== 6 || preg_match('/d6/', $input)) {
             throw new \InvalidArgumentException(
-                'isSumEqual() function only accepts strings with numbers strlen()=6. Input was: ' 
+                'isSumEqual() function only accepts strings with numbers strlen()=6. Input was: '
                 . $input
             );
         }
