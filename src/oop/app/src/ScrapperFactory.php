@@ -8,12 +8,15 @@ use src\oop\app\src\Transporters\CurlStrategy;
 use src\oop\app\src\Transporters\GuzzleAdapter;
 use Exception;
 
+/** Class which decides which transporter and which parser use for site
+ * ScrapperFactory
+ */
 class ScrapperFactory
 {
-    /**
+    /**Makes object of transporter and parser according domain
      * @param string $domain
-     * @return Scrapper
-     * @throws Exception
+     * @return Scrapper sers tha scrapper object to get and parce content
+     * @throws Exception Throws an exception when no predefined movie domain set
      */
     public function create(string $domain): Scrapper
     {
