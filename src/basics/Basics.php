@@ -85,6 +85,7 @@ class Basics implements BasicsInterface
     public function isLeapYear(int $year): bool
     {
         $this->_Validator->isYearException($year);
+        
         return $year % 4 !== 0 ? false 
             : ($year % 100 !== 0 ? true 
                 : ($year % 400 !== 0 ? false : true));
@@ -101,6 +102,7 @@ class Basics implements BasicsInterface
     public function isSumEqual(string $input): bool
     {
         $this->_Validator->isValidStringException($input);
+        
         return $input[0] + $input[1] + $input[2] === $input[3] + $input[4] + $input[5];
     }
 }
