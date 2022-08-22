@@ -32,7 +32,12 @@ $airports = require './airports.php';
     <meta name="description" content="">
     <title>Airports</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link 
+        rel="stylesheet" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+        crossorigin="anonymous"
+    >
 </head>
 <body>
 <main role="main" class="container">
@@ -52,13 +57,15 @@ $airports = require './airports.php';
     <div class="alert alert-dark">
         Filter by first letter:
 
-        <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
+        <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter) : ?>
             <a href="#"><?= $letter ?></a>
         <?php endforeach; ?>
-
+        
         <a href="/" class="float-right">Reset all filters</a>
     </div>
-
+    <!-- <?php var_dump(
+       
+    ) ?> -->
     <!--
         Sorting task
         Replace # in HREF so that link follows to the same page with the sort key with the proper sorting value
@@ -91,7 +98,45 @@ $airports = require './airports.php';
              - when you apply filter_by_state, than filter_by_first_letter (see Filtering task #1) is not reset
                i.e. if you have filter_by_first_letter set you can additionally use filter_by_state
         -->
-        <?php foreach ($airports as $airport): ?>
+
+
+
+<!-- <?php>
+        if (is_array($_POST['filter']))
+{
+foreach ($_POST['filter'] as $key=>$val)
+{
+if ($val['field'] == 'error')
+{
+if ($val['data']['value'] == 4)
+$only_err = 1;
+/*elseif ($val['data']['value'] == 9)
+$only_err = 2;*/
+unset($_POST['filter'][$key]);
+}
+
+if ($val['field'] == 'fav')
+{
+$fav = 1;
+unset($_POST['filter'][$key]);
+}
+
+if ($val['field'] == 'pereprovodka')
+{
+$pereprovodka = $val['data']['value'];
+unset($_POST['filter'][$key]);
+}
+
+if ($val['field'] == 'p_amount')
+{
+$_POST['filter'][$key]['field'] = 'p_money';
+}
+?> -->
+
+        <?php 
+            $startPage1 = 1;
+            $itemsPerPage = 10;
+            foreach (array_slice($airports, $startPage, $itemsPerPage) as $airport) : ?>
         <tr>
             <td><?= $airport['name'] ?></td>
             <td><?= $airport['code'] ?></td>
