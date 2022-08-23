@@ -3,12 +3,55 @@ require_once './functions.php';
 
 $airports = require './airports.php';
 
+
+
+//         if (is_array($_POST['filter']))
+// {
+// foreach ($_POST['filter'] as $key=>$val)
+// {
+// if ($val['field'] == 'error')
+// {
+// if ($val['data']['value'] == 4)
+// $only_err = 1;
+// /*elseif ($val['data']['value'] == 9)
+// $only_err = 2;*/
+// unset($_POST['filter'][$key]);
+// }
+
+// if ($val['field'] == 'fav')
+// {
+// $fav = 1;
+// unset($_POST['filter'][$key]);
+// }
+
+// if ($val['field'] == 'pereprovodka')
+// {
+// $pereprovodka = $val['data']['value'];
+// unset($_POST['filter'][$key]);
+// }
+
+// if ($val['field'] == 'p_amount')
+// {
+// $_POST['filter'][$key]['field'] = 'p_money';
+// }
+
+
 // Filtering
 /**
  * Here you need to check $_GET request if it has any filtering
  * and apply filtering by First Airport Name Letter and/or Airport State
  * (see Filtering tasks 1 and 2 below)
  */
+if (isset($_GET['Stfilter'])) {
+    $airportsFiltered = array_filter(
+        $airports,
+        function ($val) {
+            return $val['state'] === $_GET['Stfilter'];
+        }
+    );
+} else {
+    $airportsFiltered = $airports;
+}
 
 // Sorting
 /**
@@ -16,6 +59,17 @@ $airports = require './airports.php';
  * and apply sorting
  * (see Sorting task below)
  */
+if (isset($_GET['Sort'])) {
+    $airportsFilteredSorted = array_sort(
+        $airportsFiltered,
+        function ($val) {
+            return $val['state'] === $_GET['Stfilter'];
+        }
+    );
+} else {
+    $airportsFiltered = $airports;
+}
+$airportsFilteredSorted = $airportsFiltered;
 
 // Pagination
 /**
@@ -23,6 +77,18 @@ $airports = require './airports.php';
  * and apply pagination logic
  * (see Pagination task below)
  */
+$activePage = 1;
+
+$itemsPerPage = 10; //How many items to place on a page
+$pageNavigatorWindow = 16; //How many pages availiable in navigator string
+$listSize = count($airportsFilteredSorted);
+$numberOfPages = ceil($listSize / $itemsPerPage);
+if (isset($_GET['page']) /*&& is_int($_GET['page'])*/) $activePage = (int)$_GET['page'];
+$navigatorPagesBegin = max(1, $activePage - $pageNavigatorWindow / 2);
+$navigatorPagesEnd = min($numberOfPages, $activePage + $pageNavigatorWindow / 2);
+
+
+$airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage - 1) * $itemsPerPage, $itemsPerPage);
 ?>
 <!doctype html>
 <html lang="en">
@@ -40,7 +106,8 @@ $airports = require './airports.php';
     >
 </head>
 <body>
-<main role="main" class="container">
+    <!-- TODO REMIND ME TO COMENT MARGIN -->
+<main role="main" class="container" style="margin:0"> 
 
     <h1 class="mt-5">US Airports</h1>
 
@@ -63,9 +130,7 @@ $airports = require './airports.php';
         
         <a href="/" class="float-right">Reset all filters</a>
     </div>
-    <!-- <?php var_dump(
-       
-    ) ?> -->
+    <!-- <?php var_dump('Hi') ?> -->
     <!--
         Sorting task
         Replace # in HREF so that link follows to the same page with the sort key with the proper sorting value
@@ -101,46 +166,12 @@ $airports = require './airports.php';
 
 
 
-<!-- <?php>
-        if (is_array($_POST['filter']))
-{
-foreach ($_POST['filter'] as $key=>$val)
-{
-if ($val['field'] == 'error')
-{
-if ($val['data']['value'] == 4)
-$only_err = 1;
-/*elseif ($val['data']['value'] == 9)
-$only_err = 2;*/
-unset($_POST['filter'][$key]);
-}
-
-if ($val['field'] == 'fav')
-{
-$fav = 1;
-unset($_POST['filter'][$key]);
-}
-
-if ($val['field'] == 'pereprovodka')
-{
-$pereprovodka = $val['data']['value'];
-unset($_POST['filter'][$key]);
-}
-
-if ($val['field'] == 'p_amount')
-{
-$_POST['filter'][$key]['field'] = 'p_money';
-}
-?> -->
-
-        <?php 
-            $startPage1 = 1;
-            $itemsPerPage = 10;
-            foreach (array_slice($airports, $startPage, $itemsPerPage) as $airport) : ?>
+        <?php
+        foreach ($airportsFilteredSortedPaged as $airport) : ?>
         <tr>
             <td><?= $airport['name'] ?></td>
             <td><?= $airport['code'] ?></td>
-            <td><a href="#"><?= $airport['state'] ?></a></td>
+            <td><a href=<?="?Stfilter=" . urlencode($airport['state'])?>><?= $airport['state'] ?></a></td>
             <td><?= $airport['city'] ?></td>
             <td><?= $airport['address'] ?></td>
             <td><?= $airport['timezone'] ?></td>
@@ -159,10 +190,16 @@ $_POST['filter'][$key]['field'] = 'p_money';
          - when you apply pagination - all filters and sorting are not reset
     -->
     <nav aria-label="Navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <ul class="pagination justify-content-center ">
+            <?php for ($pageNom = $navigatorPagesBegin; $pageNom <= $navigatorPagesEnd; $pageNom++) : ?> 
+                <li class="page-item<?= $pageNom === $activePage ? ' active' : ''?>">
+                    <?= $pageNom == $activePage ? '<p' : '<a'?> 
+                    class="page-link" 
+                    href="?page=<?=$pageNom;isset($_GET['Stfilter']) ? 'Stfilter=' . $_GET['Stfilter'] : ''?>">
+                        <?= $pageNom?>
+                    <?= $pageNom == $activePage ? '</p>' : '</a>'?>
+                </li>
+            <?php endfor; ?>
         </ul>
     </nav>
 
