@@ -4,45 +4,13 @@ require_once './functions.php';
 $airports = require './airports.php';
 
 
-
-//         if (is_array($_POST['filter']))
-// {
-// foreach ($_POST['filter'] as $key=>$val)
-// {
-// if ($val['field'] == 'error')
-// {
-// if ($val['data']['value'] == 4)
-// $only_err = 1;
-// /*elseif ($val['data']['value'] == 9)
-// $only_err = 2;*/
-// unset($_POST['filter'][$key]);
-// }
-
-// if ($val['field'] == 'fav')
-// {
-// $fav = 1;
-// unset($_POST['filter'][$key]);
-// }
-
-// if ($val['field'] == 'pereprovodka')
-// {
-// $pereprovodka = $val['data']['value'];
-// unset($_POST['filter'][$key]);
-// }
-
-// if ($val['field'] == 'p_amount')
-// {
-// $_POST['filter'][$key]['field'] = 'p_money';
-// }
-
-
 // Filtering
 /**
  * Here you need to check $_GET request if it has any filtering
  * and apply filtering by First Airport Name Letter and/or Airport State
  * (see Filtering tasks 1 and 2 below)
  */
-if (isset($_GET['Stfilter'])) {
+if (isset($_GET['Stfilter']) && in_array($_GET['Stfilter'], $airports, true)) {
     $airportsFiltered = array_filter(
         $airports,
         function ($val) {
@@ -59,17 +27,28 @@ if (isset($_GET['Stfilter'])) {
  * and apply sorting
  * (see Sorting task below)
  */
-if (isset($_GET['Sort'])) {
-    $airportsFilteredSorted = array_sort(
-        $airportsFiltered,
-        function ($val) {
-            return $val['state'] === $_GET['Stfilter'];
-        }
-    );
+if (isset($_GET['SortBy'])) {
+    switch ($_GET['SortBy']) {
+        case 'Name':
+        case 'Code':            
+        case 'State':
+        case 'City':
+        // case 'Address': //unallowed
+        // case 'Timezone'://unallowed
+            $airportsFilteredSorted = uasort(
+                $airportsFiltered,
+                function ($x, $y) {
+                    return strcasecmp($x[$_GET['SortBy']], $y[$_GET['SortBy']]);
+                }
+            );
+            break;
+        default:
+            unset($_GET['SortBy']);
+    }
 } else {
-    $airportsFiltered = $airports;
+    $airportsFilteredSorted = $airportsFiltered;
 }
-$airportsFilteredSorted = $airportsFiltered;
+
 
 // Pagination
 /**
@@ -77,18 +56,13 @@ $airportsFilteredSorted = $airportsFiltered;
  * and apply pagination logic
  * (see Pagination task below)
  */
+$itemsPerPage = 5; //How many items to place on a page
 $activePage = 1;
-
-$itemsPerPage = 10; //How many items to place on a page
-$pageNavigatorWindow = 16; //How many pages availiable in navigator string
-$listSize = count($airportsFilteredSorted);
-$numberOfPages = ceil($listSize / $itemsPerPage);
 if (isset($_GET['page']) /*&& is_int($_GET['page'])*/) $activePage = (int)$_GET['page'];
-$navigatorPagesBegin = max(1, $activePage - $pageNavigatorWindow / 2);
-$navigatorPagesEnd = min($numberOfPages, $activePage + $pageNavigatorWindow / 2);
-
+$navigationPages = getNavigationPages(count($airportsFilteredSorted), $itemsPerPage, $activePage);
 
 $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage - 1) * $itemsPerPage, $itemsPerPage);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -130,7 +104,8 @@ $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage
         
         <a href="/" class="float-right">Reset all filters</a>
     </div>
-    <!-- <?php var_dump('Hi') ?> -->
+
+    <!-- <?php var_dump($navigationPages) ?> -->
     <!--
         Sorting task
         Replace # in HREF so that link follows to the same page with the sort key with the proper sorting value
@@ -191,15 +166,16 @@ $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center ">
-            <?php for ($pageNom = $navigatorPagesBegin; $pageNom <= $navigatorPagesEnd; $pageNom++) : ?> 
-                <li class="page-item<?= $pageNom === $activePage ? ' active' : ''?>">
-                    <?= $pageNom == $activePage ? '<p' : '<a'?> 
+            <?php foreach ($navigationPages as $linkTo => $linkText) : ?> 
+                <li class="page-item<?= $linkTo === $activePage ? ' active' : '' ?>">
+                    <?= $linkTo == $activePage ? '<p' : '<a'?>
                     class="page-link" 
-                    href="?page=<?=$pageNom;isset($_GET['Stfilter']) ? 'Stfilter=' . $_GET['Stfilter'] : ''?>">
-                        <?= $pageNom?>
-                    <?= $pageNom == $activePage ? '</p>' : '</a>'?>
+                    <?= $linkText === '...' ? ' style="padding:0.5rem 0.25rem"' : ''?>
+                    href="<?=setURL('page', $linkTo, false);?>">
+                        <?= $linkText?>
+                    <?= $linkTo == $activePage ? '</p>' : '</a>'?>
                 </li>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </ul>
     </nav>
 
