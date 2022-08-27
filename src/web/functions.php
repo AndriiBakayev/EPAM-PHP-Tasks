@@ -48,7 +48,7 @@ function setURL(string $setParam, string $setValue, bool $setToStart): string
 {
      $GET = $_GET; //Work with a local copy
      $GET[$setParam] = $setValue;
-     if ($setToStart) 
+     if ($setToStart)
         $GET['page'] = 1;
 
     $newURL = './?' . http_build_query($GET, '&');
@@ -59,7 +59,7 @@ function setURL(string $setParam, string $setValue, bool $setToStart): string
     //     },
     //     './?'
     // );
-    
+
     return $newURL;
 }
 
@@ -103,7 +103,7 @@ function getNavigationPages(int $listSize = 1, int $itemsPerPage = 5, int &$acti
         do {
             $j++;
         } while (!isset($navigationPages[$j])); //navigate to next unommitted page
-        $navigationPages[floor(($i -1 + $j) / 2)] = '...'; //set the page in the middle of omission
+        $navigationPages[floor(($i - 1 + $j) / 2)] = '...'; //set the page in the middle of omission
         $i = $j;
     }
     ksort($navigationPages);

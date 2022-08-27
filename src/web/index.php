@@ -10,15 +10,25 @@ $airports = require './airports.php';
  * and apply filtering by First Airport Name Letter and/or Airport State
  * (see Filtering tasks 1 and 2 below)
  */
-if (isset($_GET['Stfilter']) && in_array($_GET['Stfilter'], $airports, true)) {
-    $airportsFiltered = array_filter(
+if (isset($_GET['Flfilter'])) {
+    $airportsFilteredFl = array_filter(
         $airports,
+        function ($val) {
+            return mb_strtoupper($val['state'][0]) === $_GET['Flfilter'];
+        }
+    );
+} else {
+    $airportsFilteredFl = $airports;
+}
+if (isset($_GET['Stfilter'])) {
+    $airportsFiltered = array_filter(
+        $airportsFilteredFl,
         function ($val) {
             return $val['state'] === $_GET['Stfilter'];
         }
     );
 } else {
-    $airportsFiltered = $airports;
+    $airportsFiltered = $airportsFilteredFl;
 }
 
 // Sorting
@@ -29,13 +39,13 @@ if (isset($_GET['Stfilter']) && in_array($_GET['Stfilter'], $airports, true)) {
  */
 if (isset($_GET['SortBy'])) {
     switch ($_GET['SortBy']) {
-        case 'Name':
-        case 'Code':            
-        case 'State':
-        case 'City':
+        case 'name':
+        case 'code':
+        case 'state':
+        case 'city':
         // case 'Address': //unallowed
         // case 'Timezone'://unallowed
-            $airportsFilteredSorted = uasort(
+            $airportsFilteredSorted = c(
                 $airportsFiltered,
                 function ($x, $y) {
                     return strcasecmp($x[$_GET['SortBy']], $y[$_GET['SortBy']]);
@@ -58,7 +68,7 @@ if (isset($_GET['SortBy'])) {
  */
 $itemsPerPage = 5; //How many items to place on a page
 $activePage = 1;
-if (isset($_GET['page']) /*&& is_int($_GET['page'])*/) $activePage = (int)$_GET['page'];
+$activePage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $navigationPages = getNavigationPages(count($airportsFilteredSorted), $itemsPerPage, $activePage);
 
 $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage - 1) * $itemsPerPage, $itemsPerPage);
@@ -99,10 +109,10 @@ $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage
         Filter by first letter:
 
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter) : ?>
-            <a href="#"><?= $letter ?></a>
+            <a href="<?= setURL('Flfilter', $letter, true)?>"><?= $letter ?></a>
         <?php endforeach; ?>
         
-        <a href="/" class="float-right">Reset all filters</a>
+        <a href="./" class="float-right">Reset all filters</a>
     </div>
 
     <!-- <?php var_dump($navigationPages) ?> -->
@@ -119,11 +129,11 @@ $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="#">Name</a></th>
-            <th scope="col"><a href="#">Code</a></th>
-            <th scope="col"><a href="#">State</a></th>
-            <th scope="col"><a href="#">City</a></th>
-            <th scope="col">Address</th>
+            <th scope="col"><a href="<?= setURL('SortBy', 'name', false) ?>">Name</a></th>
+            <th scope="col"><a href="<?= setURL('SortBy', 'code', false) ?>">Code</a></th>
+            <th scope="col"><a href="<?= setURL('SortBy', 'state', false) ?>">State</a></th>
+            <th scope="col"><a href="<?= setURL('SortBy', 'city', false) ?>">City</a></th>
+            <th scope="col">Address</th >
             <th scope="col">Timezone</th>
         </tr>
         </thead>
