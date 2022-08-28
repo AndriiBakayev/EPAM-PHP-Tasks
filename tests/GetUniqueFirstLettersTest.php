@@ -8,7 +8,7 @@ class GetUniqueFirstLettersTest extends TestCase
 
     protected function setUp(): void
     {
-        //require '/scr/web/functions.php';
+         require_once __DIR__ . '\..\src\web\functions.php';
     }
 
     /**
@@ -16,8 +16,6 @@ class GetUniqueFirstLettersTest extends TestCase
      */
     public function testPositive($input, $expected)
     {
-       //echo __DIR__ ;
-         require_once __DIR__ . '\..\src\web\functions.php';
         $this->assertEquals($expected, getUniqueFirstLetters($input));
     }
 
