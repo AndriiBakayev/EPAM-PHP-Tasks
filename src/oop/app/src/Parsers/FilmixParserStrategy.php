@@ -48,6 +48,13 @@ class FilmixParserStrategy implements ParserInterface
      * @return mixed object with following properties: $title, $poster, $description.
      */
 
+    private Movie $movie;
+
+    public function __construct(Movie $movie)
+    {
+        $this->movie = $movie;
+    }
+
     public function parseContent(string $siteContent): object
     {
         $titleRe = '/<h1([^>]*)>([^<]*)<\/h1>/m';
@@ -57,17 +64,11 @@ class FilmixParserStrategy implements ParserInterface
         $descriptionRe = '/<div[^<>]*class="full-story"[^<>]*>(?<content>.*?)<\/div>/m';
         preg_match_all($descriptionRe, $siteContent, $description, PREG_SET_ORDER, 0);
         if (isset($title[0][2]) && isset($poster[0][2]) && isset($description[0][1])) {
-            return (object)[
-                'title' => $title[0][2],
-                'poster' => $poster[0][2],
-                'description' => $description[0][1],
-            ];
-        } else {
-            return (object)[
-                'title' => '',
-                'poster' => '',
-                'description' => '',
-            ];
+            $this->movie->setTitle($title[0][2]);
+            $this->movie->setPoster($poster[0][2]);
+            $this->movie->setDescription($description[0][1]);
         }
+
+        return $this->movie;
     }
 }

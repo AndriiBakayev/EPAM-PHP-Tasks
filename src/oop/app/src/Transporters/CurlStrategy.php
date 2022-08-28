@@ -31,8 +31,8 @@ class CurlStrategy implements TransportInterface
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         $res = curl_exec($ch);
         if ($res === false) {
-                echo 'Error curl: ' . curl_error($ch);
-                return '';
+            echo 'Error curl: ' . curl_error($ch);
+            return '';
         }
         $res = iconv('CP1251', mb_detect_encoding($res), $res);
 

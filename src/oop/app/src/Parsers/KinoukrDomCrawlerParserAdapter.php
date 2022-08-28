@@ -21,6 +21,7 @@
 
 namespace src\oop\app\src\Parsers;
 
+use src\oop\app\src\Models\Movie;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Crap4j;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -38,6 +39,15 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class KinoukrDomCrawlerParserAdapter implements ParserInterface
 {
+    private Crawler $crawler;
+    private Movie $movie;
+
+    public function __construct(Movie $movie)
+    {
+        $this->crawler = new Crawler();
+        $this->movie = $movie;
+    }
+
     /**
      * Function parseContent Parses site contents using DOM CRAWLER from
      * symphony package
@@ -52,23 +62,17 @@ class KinoukrDomCrawlerParserAdapter implements ParserInterface
      */
     public function parseContent(string $html): object
     {
-        $crawler = new Crawler($html);
+        $this->crawler->addContent($html);
         if (
-            (null !== $crawler->filter('h1')->text())
-            && (null !== $crawler->filter('.fposter a')->link()->getUri())
-            && (null !== $crawler->filter('.fdesc')->text())
+            (null !== $this->crawler->filter('h1')->text())
+            && (null !== $this->crawler->filter('.fposter a')->link()->getUri())
+            && (null !== $this->crawler->filter('.fdesc')->text())
         ) {
-            return (object)[
-                'title' => $crawler->filter('h1')->text(),
-                'poster' => $crawler->filter('.fposter a')->link()->getUri(),
-                'description' => $crawler->filter('.fdesc')->text(),
-            ];
-        } else {
-            return (object)[
-                'title' => '',
-                'poster' => '',
-                'description' => '',
-            ];
+            $this->movie->setTitle($this->crawler->filter('h1')->text());
+            $this->movie->setPoster($this->crawler->filter('.fposter a')->link()->getUri());
+            $this->movie->setDescription($this->crawler->filter('.fdesc')->text());
         }
+
+        return $this->movie;
     }
 }

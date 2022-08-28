@@ -10,14 +10,20 @@ namespace src\oop\app\src\Transporters;
  */
 class GuzzleAdapter implements TransportInterface
 {
+    private \GuzzleHttp\Client $client;
+
+    public function __construct()
+    {
+        $this->client = new \GuzzleHttp\Client(['base_uri' => 'http://httpbin.org/','timeout'  => 2.0]);
+    }
+
     /** gets the page content isung Guzzle libulary
      * @param  string $url for get
      * @return string Index.html source content
      */
     public function getContent(string $url): string
     {
-        $client = new \GuzzleHttp\Client(['base_uri' => 'http://httpbin.org/','timeout'  => 2.0]);
-        $responce = $client->request('GET', $url);
+        $responce = $this->client->request('GET', $url);
         $html = (string) $responce->getBody();
 
         return $html;
