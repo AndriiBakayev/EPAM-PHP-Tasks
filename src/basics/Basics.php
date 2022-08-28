@@ -41,6 +41,7 @@ class Basics implements BasicsInterface
      * acepts obgect of BasicsValidator class
      *
      * @param BasicsValidatorInterface $validator object of BasicsValidator class
+
      *
      * @return void
      */
@@ -86,18 +87,22 @@ class Basics implements BasicsInterface
      */
     public function isLeapYear(int $year): bool
     {
-        $this->Validator->isYearException($year);
-
-        return $year % 4 !== 0 ? false
-            : ($year % 100 !== 0 ? true
-                : ($year % 400 !== 0 ? false : true));
+        $this->validator->isYearException($year);
+        if ($year % 4 != 0) {
+            return false;
+        } elseif ($year % 100 != 0) {
+            return true;
+        } elseif ($year % 400 != 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
-     * IsSumEqual compares sum of leading and of tailing digits
-     * of the string and returns true when sum is equal
+     * isSumEqual compares sum of leading and of tailing digits of the string and returns true when sum is equal
      *
-     * @param string $input - input string with 6 digits to compare
+     * @param string input - input string with 6 digits to compare
      *
      * @return bool true when left sum of digits EQUALS to the right sum
      */
