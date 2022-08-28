@@ -1,16 +1,14 @@
 <?php
 
-/**
- * The $airports variable contains array of arrays of airports (see airports.php)
- * What can be put instead of placeholder so that function returns the unique first letter of each airport name
- * in alphabetical order
+/**getUniqueFirstLetters returns the unique first letter of each airport name
+ * in alphabetical order. Function omits airports where tag 'name' not found or not set
  *
- * Create a PhpUnit test (GetUniqueFirstLettersTest) which will check this behavior
- *
- * @param  array  $airports
- * @return string[]
+ * @param  array $airports - Associative array with values "'name' => 'Value'" to find
+ *                unique uppercased first letters.
+ *                Contains array of arrays of airports (see airports.php)
+ * @return array Array of distinct uppercased name's first letters sorted alphabetically
  */
-function getUniqueFirstLetters(array $airports)
+function getUniqueFirstLetters(array $airports): array
 {
     // put your logic here
     $uniqueFitsNameLetters = array_keys(
@@ -32,55 +30,46 @@ function getUniqueFirstLetters(array $airports)
     sort($uniqueFitsNameLetters);
 
     return $uniqueFitsNameLetters;
-    //return ['A', 'B', 'C'];
 }
 
 /**
- * SetURL Parses _GET array and sets new URL sretting setParam->setValue
+ * SetURL Parses _GET array and sets new URL updating it's setParam->setValue
+ * Returns new self URI 
  *
- * @param string setParam
- * @param string setValue
- * @param bool setToStart
+ * @param string setParam New or updating Get Param
+ * @param string setValue New value _GET param, null for unset
+ * @param bool setToStart True if it needed to start from page 1
  *
- * @return string
+ * @return string String of new self URI
  */
 function setURL(string $setParam, string $setValue, bool $setToStart): string
 {
-     $GET = $_GET; //Work with a local copy
-     $GET[$setParam] = $setValue;
-     if ($setToStart)
-        $GET['page'] = 1;
+    $GET = $_GET; //It is not a good prctice to modify _GET array, so let's work with a local copy
+    $GET[$setParam] = $setValue; //Add the new value to array
+    $GET['page'] = isset($GET['page']) ? $GET['page'] : null;
+    $GET['page'] = $setToStart ? null : $GET['page'] ;
 
-    $newURL = './?' . http_build_query($GET, '&');
-    //  $newURL = array_reduce(
-    //     array_keys($GET),
-    //     function ($carry, $key) use ($GET) {
-    //         $carry .= $key.'=' . $GET[$key];
-    //     },
-    //     './?'
-    // );
-
-    return $newURL;
+    return './?' . http_build_query($GET, '&');
 }
 
 /**
  * getNavigationPages generates list of navigation pages with omissions
- * sorted array of Pages includes:
+ * returns sorted array of Pages ($key=page no, $val=text) which includes:
  *  - first and last page
  *  - active page and a $pageNavigatorWindow around it
- *  - every $pageNavigatorWindow's page for two-click navigaton
+ *  - every $pageNavigatorWindow's page for two-click far navigaton
  *  - omissions (each omissions with '...' text) links to midlle page of ommitted block
+ *  Stricts $activePage to [1..$numberOfPages]
  *
  * @param int listSize Total size of list
  * @param int $itemsPerPage How many items to place on a page
- * @param int activePage Active page by defailt
+ * @param int activePage Active page
  *
  * @return array keys are page numbers and values are texts
  */
 function getNavigationPages(int $listSize = 1, int $itemsPerPage = 5, int &$activePage = 1): array
 {
     $pageNavigatorWindow = 10; //How many pages to show around $activePage
-
     $listSize = max($listSize, 1);
     $activePage = max($activePage, 1);
     $numberOfPages = ceil($listSize / $itemsPerPage);
@@ -107,5 +96,6 @@ function getNavigationPages(int $listSize = 1, int $itemsPerPage = 5, int &$acti
         $i = $j;
     }
     ksort($navigationPages);
+
     return $navigationPages;
 }

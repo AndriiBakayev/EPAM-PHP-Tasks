@@ -1,52 +1,48 @@
 <?php
 require_once './functions.php';
-
-$airports = require './airports.php';
-
+$airports = require_once './airports.php';
 
 // Filtering
 /**
- * Here you need to check $_GET request if it has any filtering
- * and apply filtering by First Airport Name Letter and/or Airport State
- * (see Filtering tasks 1 and 2 below)
+ * checks $_GET request if it has any filtering 'flFilter' and 'stFilter'
+ * and applies filtering by First Airport Name Letter and/or Airport State
  */
-if (isset($_GET['Flfilter'])) {
-    $airportsFilteredFl = array_filter(
+if (isset($_GET['stFilter'])) {
+    $airportsFilteredSt = array_filter(
         $airports,
         function ($val) {
-            return mb_strtoupper($val['state'][0]) === $_GET['Flfilter'];
+            return $val['state'] === $_GET['stFilter'];
         }
     );
 } else {
-    $airportsFilteredFl = $airports;
+    $airportsFilteredSt = $airports;
 }
-if (isset($_GET['Stfilter'])) {
+//$airportsFilteredSt will be used below in getUniqueLetters before applied flFilter
+if (isset($_GET['flFilter'])) {
     $airportsFiltered = array_filter(
-        $airportsFilteredFl,
+        $airportsFilteredSt,
         function ($val) {
-            return $val['state'] === $_GET['Stfilter'];
+            return mb_strtoupper($val['name'][0]) === $_GET['flFilter'];
         }
     );
 } else {
-    $airportsFiltered = $airportsFilteredFl;
+    $airportsFiltered = $airportsFilteredSt;
 }
 
 // Sorting
 /**
- * Here you need to check $_GET request if it has sorting key
- * and apply sorting
- * (see Sorting task below)
+ * checks $_GET request if it has sorting 'SortBy' key for particular values
+ * and applies sorting
  */
+$airportsFilteredSorted = $airportsFiltered;
 if (isset($_GET['SortBy'])) {
     switch ($_GET['SortBy']) {
         case 'name':
         case 'code':
         case 'state':
         case 'city':
-        // case 'Address': //unallowed
-        // case 'Timezone'://unallowed
-            $airportsFilteredSorted = c(
-                $airportsFiltered,
+            uasort(
+                $airportsFilteredSorted,
                 function ($x, $y) {
                     return strcasecmp($x[$_GET['SortBy']], $y[$_GET['SortBy']]);
                 }
@@ -55,22 +51,16 @@ if (isset($_GET['SortBy'])) {
         default:
             unset($_GET['SortBy']);
     }
-} else {
-    $airportsFilteredSorted = $airportsFiltered;
 }
-
 
 // Pagination
 /**
- * Here you need to check $_GET request if it has pagination key
- * and apply pagination logic
- * (see Pagination task below)
+ * checks $_GET request if it has pagination key
+ * and applys pagination logic
  */
 $itemsPerPage = 5; //How many items to place on a page
-$activePage = 1;
 $activePage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $navigationPages = getNavigationPages(count($airportsFilteredSorted), $itemsPerPage, $activePage);
-
 $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage - 1) * $itemsPerPage, $itemsPerPage);
 
 ?>
@@ -90,42 +80,19 @@ $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage
     >
 </head>
 <body>
-    <!-- TODO REMIND ME TO COMENT MARGIN -->
-<main role="main" class="container" style="margin:0"> 
-
+<main role="main" class="container"> 
     <h1 class="mt-5">US Airports</h1>
 
-    <!--
-        Filtering task #1
-        Replace # in HREF attribute so that link follows to the same page with the filter_by_first_letter key
-        i.e. /?filter_by_first_letter=A or /?filter_by_first_letter=B
-
-        Make sure, that the logic below also works:
-         - when you apply filter_by_first_letter the page should be equal 1
-         - when you apply filter_by_first_letter, than filter_by_state (see Filtering task #2) is not reset
-           i.e. if you have filter_by_state set you can additionally use filter_by_first_letter
-    -->
     <div class="alert alert-dark">
         Filter by first letter:
 
-        <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter) : ?>
-            <a href="<?= setURL('Flfilter', $letter, true)?>"><?= $letter ?></a>
+        <?php foreach (getUniqueFirstLetters($airportsFilteredSt) as $letter) : ?>
+            <a href="<?= setURL('flFilter', $letter, true)?>"><?= $letter ?></a>
         <?php endforeach; ?>
         
         <a href="./" class="float-right">Reset all filters</a>
     </div>
 
-    <!-- <?php var_dump($navigationPages) ?> -->
-    <!--
-        Sorting task
-        Replace # in HREF so that link follows to the same page with the sort key with the proper sorting value
-        i.e. /?sort=name or /?sort=code etc
-
-        Make sure, that the logic below also works:
-         - when you apply sorting pagination and filtering are not reset
-           i.e. if you already have /?page=2&filter_by_first_letter=A after applying sorting the url should looks like
-           /?page=2&filter_by_first_letter=A&sort=name
-    -->
     <table class="table">
         <thead>
         <tr>
@@ -138,52 +105,34 @@ $airportsFilteredSortedPaged = array_slice($airportsFilteredSorted, ($activePage
         </tr>
         </thead>
         <tbody>
-        <!--
-            Filtering task #2
-            Replace # in HREF so that link follows to the same page with the filter_by_state key
-            i.e. /?filter_by_state=A or /?filter_by_state=B
-
-            Make sure, that the logic below also works:
-             - when you apply filter_by_state the page should be equal 1
-             - when you apply filter_by_state, than filter_by_first_letter (see Filtering task #1) is not reset
-               i.e. if you have filter_by_first_letter set you can additionally use filter_by_state
-        -->
-
-
 
         <?php
         foreach ($airportsFilteredSortedPaged as $airport) : ?>
         <tr>
             <td><?= $airport['name'] ?></td>
             <td><?= $airport['code'] ?></td>
-            <td><a href=<?="?Stfilter=" . urlencode($airport['state'])?>><?= $airport['state'] ?></a></td>
+            <td><a href=<?= setURL("stFilter", $airport['state'], true) ?>><?= $airport['state'] ?></a></td>
             <td><?= $airport['city'] ?></td>
-            <td><?= $airport['address'] ?></td>
+            <td><?=/*Avoid line wraps in postcodes:*/
+                    preg_replace('/([\s][A-Z]{2})[ ](\d{5})/ui', '${1}&nbsp${2}', $airport['address'])
+            ?></td>
             <td><?= $airport['timezone'] ?></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
 
-    <!--
-        Pagination task
-        Replace HTML below so that it shows real pages dependently on number of airports after all filters applied
-
-        Make sure, that the logic below also works:
-         - show 5 airports per page
-         - use page key (i.e. /?page=1)
-         - when you apply pagination - all filters and sorting are not reset
-    -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center ">
             <?php foreach ($navigationPages as $linkTo => $linkText) : ?> 
                 <li class="page-item<?= $linkTo === $activePage ? ' active' : '' ?>">
-                    <?= $linkTo == $activePage ? '<p' : '<a'?>
-                    class="page-link" 
-                    <?= $linkText === '...' ? ' style="padding:0.5rem 0.25rem"' : ''?>
-                    href="<?=setURL('page', $linkTo, false);?>">
+                    <?= $linkTo === $activePage ? '<p' : '<a'?>
+                        class="page-link" 
+                        <?= $linkText === '...' ? ' style="padding:0.5rem 0.25rem"' : ''?>
+                        href="<?=setURL('page', $linkTo, false);?>
+                    ">
                         <?= $linkText?>
-                    <?= $linkTo == $activePage ? '</p>' : '</a>'?>
+                    <?= $linkTo === $activePage ? '</p>' : '</a>'?>
                 </li>
             <?php endforeach; ?>
         </ul>
