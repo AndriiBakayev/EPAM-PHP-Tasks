@@ -1,11 +1,16 @@
 <?php
 
 require '../../../vendor/autoload.php';
-
-use src\oop\app\src\Models\Movie;
+use Symfony\Component\DomCrawler\Crawler;
 use src\oop\app\src\ScrapperFactory;
+$url="https://www.pinterest.com/search/pins/?q=cats&rs=typed&term_meta[]=cats%7Ctyped"
+$cient = new \GuzzleHttp\Client();
+$http = $client->request('GET',$url);
+$crawler = new Crawler();
+$crawler->filter('body')
+print_r($crawler)
+?>;
 
-?>
 
 <!doctype html>
 <html lang="en">
@@ -36,17 +41,14 @@ use src\oop\app\src\ScrapperFactory;
 
 <?php
 
-$scrapperFactory = new ScrapperFactory();
+// $scrapperFactory = new ScrapperFactory();
 
-$filmixMovie = $scrapperFactory->create('filmix')->getMovie(
-    'https://filmix.ac/filmi/triller/151413-20022-ledyanoy-drayv-2021.html'
-);
-$kinoukrMovie = $scrapperFactory->create('kinoukr')->getMovie(
-    'https://kinoukr.com/4166-pravdyva-istoriya-bandy-kelli.html'
-);
+// $filmixMovie = $scrapperFactory->create('filmix')->getMovie('https://filmix.ac/filmi/triller/151413-lost-ledyanoy-drayv-2021.html');
+// $kinoukrMovie = $scrapperFactory->create('kinoukr')->getMovie('https://kinoukr.com/4166-pravdyva-istoriya-bandy-kelli.html');
 
 ?>
-<div class="container">
+<!--
+    <div class="container">
     <div class="film">
         <h1><?= $filmixMovie->getTitle(); ?></h1>
         <img src="<?= $filmixMovie->getPoster(); ?>" alt="Poster"/>
@@ -58,7 +60,7 @@ $kinoukrMovie = $scrapperFactory->create('kinoukr')->getMovie(
         <p><?= $kinoukrMovie->getDescription(); ?></p>
     </div>
 </div>
-
+    -->
 </body>
 </html>
 
