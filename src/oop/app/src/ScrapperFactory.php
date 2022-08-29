@@ -17,11 +17,11 @@ class ScrapperFactory
 {
     private Movie $movie;
 
-    public function __construct(Movie $movieLeft, Movie $movieRight)
-    {
-        $this->movieLeft = $movieLeft;
-        $this->movieRight = $movieRight;
-    }
+    // public function __construct(Movie $movieLeft, Movie $movieRight)
+    // {
+    //     $this->movieLeft = $movieLeft;
+    //     $this->movieRight = $movieRight;
+    // }
 
 
     /**Makes object of transporter and parser according domain
@@ -35,14 +35,14 @@ class ScrapperFactory
             case 'filmix':
                 return new Scrapper(
                     new CurlStrategy(),
-                    new FilmixParserStrategy($this->movieLeft),
-                    $this->movieLeft
+                    new FilmixParserStrategy(new Movie()),
+                    new Movie()
                 );
             case 'kinoukr':
                 return new Scrapper(
                     new GuzzleAdapter(new \GuzzleHttp\Client()),
-                    new KinoukrDomCrawlerParserAdapter($this->movieRight, new Crawler()),
-                    $this->movieRight
+                    new KinoukrDomCrawlerParserAdapter(new Movie(), new Crawler()),
+                    new Movie()
                 );
             default:
                 throw new Exception('Resource not found!');

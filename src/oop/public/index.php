@@ -36,7 +36,7 @@ use src\oop\app\src\ScrapperFactory;
 
 <?php
 
-$scrapperFactory = new ScrapperFactory(new Movie(), new Movie());
+$scrapperFactory = new ScrapperFactory();
 
 $filmixMovie = $scrapperFactory->create('filmix')->getMovie(
     'https://filmix.ac/filmi/triller/151413-20022-ledyanoy-drayv-2021.html'
