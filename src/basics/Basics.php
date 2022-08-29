@@ -87,7 +87,7 @@ class Basics implements BasicsInterface
      */
     public function isLeapYear(int $year): bool
     {
-        $this->validator->isYearException($year);
+        $this->Validator->isYearException($year);
         if ($year % 4 != 0) {
             return false;
         } elseif ($year % 100 != 0) {
