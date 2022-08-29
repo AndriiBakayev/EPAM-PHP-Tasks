@@ -17,10 +17,10 @@ class ScrapperFactory
 {
     private Movie $movie;
 
-    public function __construct()
+    public function __construct(Movie $movieLeft, Movie $movieRight)
     {
-        $this->movieLeft = new Movie();
-        $this->movieRight = new Movie();
+        $this->movieLeft = $movieLeft;
+        $this->movieRight = $movieRight;
     }
 
 

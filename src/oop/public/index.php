@@ -2,6 +2,7 @@
 
 require '../../../vendor/autoload.php';
 
+use src\oop\app\src\Models\Movie;
 use src\oop\app\src\ScrapperFactory;
 
 ?>
@@ -35,10 +36,14 @@ use src\oop\app\src\ScrapperFactory;
 
 <?php
 
-$scrapperFactory = new ScrapperFactory();
+$scrapperFactory = new ScrapperFactory(new Movie(), new Movie());
 
-$filmixMovie = $scrapperFactory->create('filmix')->getMovie('https://filmix.ac/filmi/triller/151413-20022-ledyanoy-drayv-2021.html');
-$kinoukrMovie = $scrapperFactory->create('kinoukr')->getMovie('https://kinoukr.com/4166-pravdyva-istoriya-bandy-kelli.html');
+$filmixMovie = $scrapperFactory->create('filmix')->getMovie(
+    'https://filmix.ac/filmi/triller/151413-20022-ledyanoy-drayv-2021.html'
+);
+$kinoukrMovie = $scrapperFactory->create('kinoukr')->getMovie(
+    'https://kinoukr.com/4166-pravdyva-istoriya-bandy-kelli.html'
+);
 
 ?>
 <div class="container">
