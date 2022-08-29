@@ -34,7 +34,7 @@ function getUniqueFirstLetters(array $airports): array
 
 /**
  * SetURL Parses _GET array and sets new URL updating it's setParam->setValue
- * Returns new self URI 
+ * Returns new self URI
  *
  * @param string setParam New or updating Get Param
  * @param string setValue New value _GET param, null for unset
@@ -54,7 +54,7 @@ function setURL(string $setParam, string $setValue, bool $setToStart): string
 
 /**
  * getNavigationPages generates list of navigation pages with omissions
- * returns sorted array of Pages ($key=page no, $val=text) which includes:
+ * returns sorted array of Pages links ($key=page no, $val=text of link) which includes:
  *  - first and last page
  *  - active page and a $pageNavigatorWindow around it
  *  - every $pageNavigatorWindow's page for two-click far navigaton
@@ -78,16 +78,20 @@ function getNavigationPages(int $listSize = 1, int $itemsPerPage = 5, int &$acti
     //First and last:
     $navigationPages = array(1 => 1 , $numberOfPages => $numberOfPages);
     //Every Window's step:
-    for ($i = $pageNavigatorWindow; $i < $numberOfPages; $i += $pageNavigatorWindow)
+    for ($i = $pageNavigatorWindow; $i < $numberOfPages; $i += $pageNavigatorWindow) {
         $navigationPages[$i] = $i;
+    }
     //Window nearby the activepage:
     $navigatorPagesBegin = max(1, min($activePage - $pageNavigatorWindow / 2, $numberOfPages - $pageNavigatorWindow));
     $navigatorPagesEnd = min($numberOfPages, max($activePage + $pageNavigatorWindow / 2, $pageNavigatorWindow));
-    for ($i = $navigatorPagesBegin; $i <= $navigatorPagesEnd; $i++)
+    for ($i = $navigatorPagesBegin; $i <= $navigatorPagesEnd; $i++) {
         $navigationPages[$i] = $i;
+    }
     //Omissions:
     for ($i = 2; $i < $numberOfPages; $i++) {
-        if (isset($navigationPages[$i])) continue; //navigate to next ommited page
+        if (isset($navigationPages[$i])) { //navigate to next ommited page
+            continue;
+        }
         $j = $i;
         do {
             $j++;
