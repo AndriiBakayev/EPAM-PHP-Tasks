@@ -32,7 +32,7 @@ class Movie implements MovieInterface
      */
     public function setTitle(string $title): void
     {
-            $this->title = $title;
+        $this->title = $title;
     }
 
     /**

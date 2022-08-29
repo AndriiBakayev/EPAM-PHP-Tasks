@@ -17,13 +17,6 @@ class ScrapperFactory
 {
     private Movie $movie;
 
-    // public function __construct(Movie $movieLeft, Movie $movieRight)
-    // {
-    //     $this->movieLeft = $movieLeft;
-    //     $this->movieRight = $movieRight;
-    // }
-
-
     /**Makes object of transporter and parser according domain
      * @param string $domain
      * @return Scrapper sers tha scrapper object to get and parce content
