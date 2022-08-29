@@ -32,11 +32,11 @@ class Scrapper
      * @param  TransportInterface  $transporter object
      * @param  ParserInterface  $parser object
      */
-    public function __construct(TransportInterface $transporter, ParserInterface $parser)
+    public function __construct(TransportInterface $transporter, ParserInterface $parser, Movie $movie)
     {
         $this->transporter = $transporter;
         $this->parser = $parser;
-        $this->movie = new Movie();
+        $this->movie = $movie;
     }
     /**
      * Gets content from url, prrses using Parser class object and sets Movie object
