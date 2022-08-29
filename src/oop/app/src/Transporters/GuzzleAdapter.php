@@ -15,7 +15,6 @@ class GuzzleAdapter implements TransportInterface
     public function __construct(\GuzzleHttp\Client $client)
     {
         $this->client = $client;
-        //$this->client = new \GuzzleHttp\Client(['base_uri' => 'http://httpbin.org/','timeout'  => 2.0]);
     }
 
     /** gets the page content isung Guzzle libulary
