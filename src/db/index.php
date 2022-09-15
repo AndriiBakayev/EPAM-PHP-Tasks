@@ -193,22 +193,22 @@ $airports = $sth->fetchAll()
                 'SortBy',
                 $currentOrder === 'name' ? 'name_desc' : ($currentOrder === 'name_desc' ? '' : 'name'),
                 false
-            ) ?>">Name</a></th>
+            ) ?>">Name<?= $currentOrder === 'name' ? '&nbsp▼' : ($currentOrder === 'name_desc' ? '&nbsp▲' : '')?></a></th>
             <th scope="col"><a href="<?= setURL(
                 'SortBy',
                 $currentOrder === 'code' ? 'code_desc' : ($currentOrder === 'code_desc' ? '' : 'code'),
                 false
-            ) ?>">Code</a></th>
+            ) ?>">Code<?= $currentOrder === 'code' ? '&nbsp▼' : ($currentOrder === 'code_desc' ? '&nbsp▲' : '')?></a></th>
             <th scope="col"><a href="<?= setURL(
                 'SortBy',
                 $currentOrder === 'state' ? 'state_desc' : ($currentOrder === 'state_desc' ? '' : 'state'),
                 false
-            ) ?>">State</a></th>
+            ) ?>">State<?= $currentOrder === 'state' ? '&nbsp▼' : ($currentOrder === 'state_desc' ? '&nbsp▲' : '')?></a></th>
             <th scope="col"><a href="<?= setURL(
                 'SortBy',
                 $currentOrder === 'city' ? 'city_desc' : ($currentOrder === 'city_desc' ? '' : 'city'),
                 false
-            ) ?>">City</a></th>
+            ) ?>">City<?= $currentOrder === 'city' ? '&nbsp▼' : ($currentOrder === 'city_desc' ? '&nbsp▲' : '')?></a></th>
             <th scope="col">Address</th >
             <th scope="col">Timezone</th>
         </tr>
