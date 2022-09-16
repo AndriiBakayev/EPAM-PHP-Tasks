@@ -46,6 +46,9 @@ function setURL(string $setParam, string $setValue, bool $setToStart): string
 {
     $GET = $_GET; //It is not a good prctice to modify _GET array, so let's work with a local copy
     $GET[$setParam] = $setValue; //Add the new value to array
+    if ($setValue === '') {
+        unset($GET[$setParam]);
+    }
     $GET['page'] = isset($GET['page']) ? $GET['page'] : null;
     $GET['page'] = $setToStart ? null : $GET['page'] ;
 
